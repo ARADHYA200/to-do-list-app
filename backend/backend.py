@@ -4,12 +4,10 @@ import json
 import os
 
 app = Flask(__name__)
-CORS(app)  # allow React frontend to access this backend
+CORS(app)
 
-FILE = "tasks.json"  # file to store tasks
+FILE = "tasks.json"
 
-
-# ✅ Load tasks
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
     if not os.path.exists(FILE):
@@ -18,16 +16,14 @@ def get_tasks():
         tasks = json.load(f)
     return jsonify(tasks)
 
-
-# ✅ Add a new task
 @app.route("/tasks", methods=["POST"])
 def add_task():
     new_task = request.json
+    tasks = []
+
     if os.path.exists(FILE):
         with open(FILE, "r") as f:
             tasks = json.load(f)
-    else:
-        tasks = []
 
     tasks.append(new_task)
     with open(FILE, "w") as f:
@@ -35,8 +31,6 @@ def add_task():
 
     return jsonify({"message": "Task added"})
 
-
-# ✅ Delete a task
 @app.route("/tasks/<int:task_id>", methods=["DELETE"])
 def delete_task(task_id):
     if not os.path.exists(FILE):
@@ -52,6 +46,7 @@ def delete_task(task_id):
 
     return jsonify({"message": "Task deleted"})
 
-
+# ----------- REQUIRED FOR RENDER -------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
