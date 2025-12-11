@@ -124,7 +124,8 @@ export default function App() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
-  const API_URL = "http://127.0.0.1:5000/tasks";
+  // 🔥 Use your LIVE backend instead of localhost
+  const API_URL = "https://todo-backend-7mtk.onrender.com/tasks";
 
   // 🧠 Load tasks from backend when app starts
   useEffect(() => {
@@ -167,7 +168,7 @@ export default function App() {
       .catch((err) => console.error("Error deleting task:", err));
   };
 
-  // ✅ Toggle completion (just on UI for now)
+  // ✅ Toggle completion (UI only)
   const toggleComplete = (id) => {
     setTasks(tasks.map((t) =>
       t.id === id ? { ...t, completed: !t.completed } : t
