@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/todo-app/',   // 🔥 change this folder name to your repo name
+  base: '/to-do-list-app/',   // ✔ MUST match repo name EXACTLY
 })
